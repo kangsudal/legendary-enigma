@@ -1,35 +1,30 @@
 
 
 body {
-
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /*헤더 배경색*/
 .header-background {
     background-color: #A6D3A0;
-    margin-top: 0;
-    /*padding: 20px 20px 20px 40px;*/
 }
 
 header {
-    height: 160px;
-    margin: 0 auto;
-    min-width: 320px;
-    max-width: 656px;
-    position: relative;
-
+    height: 100px;
 }
 
 /*헤더 글씨*/
 header > span {
     font-size: 48px;
     opacity: 0.9;
-    color: white;
+    color: black;
 }
 
 
 .content {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 /*글 제목*/
@@ -41,4 +36,15 @@ h1 a {
 
 .post {
     margin-bottom: 70px;
+}
+.me {
+    float: none;
+    margin: 0;
+    position: absolute;
+    /*top: 48px;*/
+}
+.about {
+    border-left: 1px dotted #111;
+    margin-left: 256px;
+    padding-left: 16px;
 }
