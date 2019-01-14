@@ -20,6 +20,9 @@
     </head>
     <body>
         <div class="header-background">
+            {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">+</span></a><!--글추가버튼-->
+            {% endif %}
             <header>
                 <span>KANG SU-KYUNG</span>
 <!--                 <nav class="navbar navbar-expand-sm bg-light">
@@ -30,6 +33,7 @@
                         <li><a href="/recherche/corpus-dat%C3%A9/">Base de données</a></li>
                     </ul>                 
                 </nav>      -->
+
                 <ul class="nav nav-pills nav-justified">
                   <li class="nav-item">
                     <a class="nav-link active" href="/">Home</a>
