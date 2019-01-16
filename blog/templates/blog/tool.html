@@ -1,10 +1,120 @@
 {% extends 'blog/base.html' %}
 
                     {% block content %}
-                    <section>
-                    		<h3>tool</h3>
-
-
+                    <h1>tool</h1>
+                    <section class ="champion-list">
+                    	{#% for champion in championlist %#}
+                    	<div>
+                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg"></div>
+                    		<div class="champion-info">
+                    			<span class="champion-name">가렌</span>
+                    			<ul>
+                    				<li>
+                    					<div>방어: 7/10 </div>
+                    					<div class="stat-boxes">
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    						<div class="foo blue"></div>
+                    					</div>
+                    				</li>
+                    				<li>
+                    					<div>공격: 7/10</div>
+	                    				<div class="stat-boxes">
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+											<div class="foo wine"></div>
+										</div>
+									</li>	
+                    				<li>
+                    					<div>마법: 1/10</div>
+	                    				<div class="stat-boxes">
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+											<div class="foo purple"></div>
+										</div>
+									</li>
+                    				<li>
+                    					<div>난이도: 5/10</div>
+	                    				<div class="stat-boxes">
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    					<div class="foo yellow"></div>
+	                    				</div>
+                    				</li>
+                    			</ul>
+                    		</div>
                     	</div>
+
+
+                    	<div>
+                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
+                    		<div class="champion-info">
+                    			<span class="champion-name">가렌</span>
+                    			<ul>
+                    				<li>방어: 7/10</li>
+                    				<li>공격: 7/10</li>
+                    				<li>마법: 1/10</li>
+                    				<li>난이도: 5/10</li>
+                    			</ul>
+                    		</div>
+                    	</div>
+
+                    	<div>
+                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
+                    		<div class="champion-info">
+                    			<span class="champion-name">가렌</span>
+                    			<ul>
+                    				<li>방어: 7/10</li>
+                    				<li>공격: 7/10</li>
+                    				<li>마법: 1/10</li>
+                    				<li>난이도: 5/10</li>
+                    			</ul>
+                    		</div>
+                    	</div>
+
+                    	<div>
+                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
+                    		<div class="champion-info">
+                    			<span class="champion-name">가렌</span>
+                    			<ul>
+                    				<li>방어: 7/10</li>
+                    				<li>공격: 7/10</li>
+                    				<li>마법: 1/10</li>
+                    				<li>난이도: 5/10</li>
+                    			</ul>
+                    		</div>
+                    	</div>
+
+
+                    	{#% endfor %#}
+
                     </section>
                     {% endblock %}
