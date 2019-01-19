@@ -3,118 +3,52 @@
                     {% block content %}
                     <h1>tool</h1>
                     <section class ="champion-list">
-                    	{#% for champion in championlist %#}
-                    	<div>
-                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg"></div>
-                    		<div class="champion-info">
-                    			<span class="champion-name">가렌</span>
-                    			<ul>
-                    				<li>
-                    					<div>방어: 7/10 </div>
-                    					<div class="stat-boxes">
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    						<div class="foo blue"></div>
-                    					</div>
-                    				</li>
-                    				<li>
-                    					<div>공격: 7/10</div>
-	                    				<div class="stat-boxes">
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-											<div class="foo wine"></div>
-										</div>
-									</li>	
-                    				<li>
-                    					<div>마법: 1/10</div>
-	                    				<div class="stat-boxes">
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-											<div class="foo purple"></div>
-										</div>
-									</li>
-                    				<li>
-                    					<div>난이도: 5/10</div>
-	                    				<div class="stat-boxes">
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    					<div class="foo yellow"></div>
-	                    				</div>
-                    				</li>
-                    			</ul>
-                    		</div>
-                    	</div>
 
 
-                    	<div>
-                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
-                    		<div class="champion-info">
-                    			<span class="champion-name">가렌</span>
-                    			<ul>
-                    				<li>방어: 7/10</li>
-                    				<li>공격: 7/10</li>
-                    				<li>마법: 1/10</li>
-                    				<li>난이도: 5/10</li>
-                    			</ul>
-                    		</div>
-                    	</div>
+                         {% for key, value in champions.items %}
+                         <div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-info">
+                                   <span class="champion-name">{{key}}</span>
+                                   <ul>
+                                        <li>
+                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div class="stat-boxes">
+                                                  {% load blog_filters %}
+                                                  {% for i in value.info.defense|times %}
+                                                  <div class="foo blue"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                        <li>
+                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.attack|times %}
+                                                       <div class="foo wine"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>     
+                                        <li>
+                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.magic|times %}
+                                                       <div class="foo purple"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>
+                                        <li>
+                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.difficulty|times %}
+                                                  <div class="foo yellow"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                   </ul>
+                              </div>
+                         </div>
+                         {% endfor %}     
 
-                    	<div>
-                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
-                    		<div class="champion-info">
-                    			<span class="champion-name">가렌</span>
-                    			<ul>
-                    				<li>방어: 7/10</li>
-                    				<li>공격: 7/10</li>
-                    				<li>마법: 1/10</li>
-                    				<li>난이도: 5/10</li>
-                    			</ul>
-                    		</div>
-                    	</div>
-
-                    	<div>
-                    		<div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png "></div>
-                    		<div class="champion-info">
-                    			<span class="champion-name">가렌</span>
-                    			<ul>
-                    				<li>방어: 7/10</li>
-                    				<li>공격: 7/10</li>
-                    				<li>마법: 1/10</li>
-                    				<li>난이도: 5/10</li>
-                    			</ul>
-                    		</div>
-                    	</div>
-
-
-                    	{#% endfor %#}
-
+                                            
                     </section>
                     {% endblock %}

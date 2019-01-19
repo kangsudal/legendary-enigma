@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.utils  import timezone
 from .forms import PostForm
+import requests
 
 # Create your views here.
 
@@ -52,4 +53,20 @@ def post_edit(request, pk):
 
 
 def tool(request):
-    return render(request, 'blog/tool.html',{})    
+    url = 'http://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/champion.json'
+    response = requests.get(url)
+    champion_data = response.json()
+
+    return render(request, 'blog/tool.html',{
+        # 'champions': champion_data['data']
+
+        # 'name' : champion_data['data']['Aatrox']['name'],
+        # 'info' : champion_data['data']['Aatrox']['info'],
+
+        'champion_data' : champion_data,
+
+        'champions' : champion_data['data'],
+    })       
+    # return render(request, 'blog/tool.html',{})    
+
+    
