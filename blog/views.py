@@ -56,7 +56,7 @@ def post_edit(request, pk):
 def tool(request):
 
     # load champion data
-    url = 'http://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/champion.json'
+    url = 'http://ddragon.leagueoflegends.com/cdn/9.1.1/data/en_US/champion.json'
     response = requests.get(url)
     champion_data = response.json()
     champions = champion_data['data']

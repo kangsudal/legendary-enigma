@@ -26,7 +26,7 @@ class SearchByStatForm(forms.Form):
         magic = self.cleaned_data['magic']
         difficulty = self.cleaned_data['difficulty']
 
-        url = 'http://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/champion.json'
+        url = 'http://ddragon.leagueoflegends.com/cdn/9.1.1/data/en_US/champion.json'
         response = requests.get(url)
         champion_data = response.json()
         champions = champion_data['data']    	
