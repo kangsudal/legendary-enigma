@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.utils  import timezone
 from .forms import PostForm
+from .forms import SearchByStatForm
 import requests
 
 # Create your views here.
@@ -53,20 +54,32 @@ def post_edit(request, pk):
 
 
 def tool(request):
+
+    # load champion data
     url = 'http://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/champion.json'
     response = requests.get(url)
     champion_data = response.json()
+    champions = champion_data['data']
+
+
+    # search champion by stat
+    search_result={}    
+
+    if request.method == "POST":
+        #폼에 입력된 데이터를 view 페이지로 가지고 올 때
+        form = SearchByStatForm(request.POST)
+        if form.is_valid():
+            search_result = form.search()
+
+    else:    
+       form = SearchByStatForm()
+
 
     return render(request, 'blog/tool.html',{
-        # 'champions': champion_data['data']
+        #champion list
+        'champions' : champions,
+        #search list
+        'form' : form, 'search_result' : search_result 
 
-        # 'name' : champion_data['data']['Aatrox']['name'],
-        # 'info' : champion_data['data']['Aatrox']['info'],
-
-        'champion_data' : champion_data,
-
-        'champions' : champion_data['data'],
     })       
     # return render(request, 'blog/tool.html',{})    
-
-    

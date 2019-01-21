@@ -3,8 +3,61 @@
                     {% block content %}
                     <h1>tool</h1>
                     <section class ="champion-list">
+                         <!-- 검색 -->
+                         <form method="POST" class="search-form">{% csrf_token %}
+                              {{ form.as_p}}
+                              <button type="submit">search</button>
+                         </form>
 
+                         <h3>검색결과:</h3>
+                         {% for key, value in search_result.items %}
+                         <div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-info">
+                                   <span class="champion-name">{{key}}</span>
+                                   <ul>
+                                        <li>
+                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div class="stat-boxes">
+                                                  {% load blog_filters %}
+                                                  {% for i in value.info.defense|times %}
+                                                  <div class="foo blue"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                        <li>
+                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.attack|times %}
+                                                       <div class="foo wine"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>     
+                                        <li>
+                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.magic|times %}
+                                                       <div class="foo purple"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>
+                                        <li>
+                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.difficulty|times %}
+                                                  <div class="foo yellow"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                   </ul>
+                              </div>
+                         </div>
+                         {% endfor %}      
 
+                         <hr>                     
+
+                         <h3> 전체 리스트 </h3>
+                         <!-- champion 전체 리스트-->
                          {% for key, value in champions.items %}
                          <div>
                               <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
