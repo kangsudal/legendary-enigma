@@ -1,0 +1,268 @@
+{% extends 'blog/base.html' %}
+
+                    {% block content %}
+                    <h1>tool</h1>
+                    <section class ="champion-list">
+                         <!--graph-->
+                         <div id="container" >
+                              <canvas id="myChart" width="400" height="400"></canvas>
+                         </div>
+                         <script>
+                         var DATA_COUNT = 142;
+                         var ctx = document.getElementById("myChart");
+                         var bubbleChartData = {
+                              datasets: [
+                              {
+                                   label: ["Aatrox"],
+                                   backgroundColor: "rgba(255,221,50,0.2)",
+                                   borderColor: "rgba(255,221,50,1)",
+                                   data: [{
+                                     x: {{champions.Aatrox.info.magic}},
+                                     y: {{champions.Aatrox.info.defense}},
+                                     r: 15
+                                   }]
+                              },
+                              {
+                                   label: ["Ahri"],
+                                   backgroundColor: "rgba(60,186,159,0.2)",
+                                   borderColor: "rgba(60,186,159,1)",
+                                   data: [{
+                                     x: {{champions.Ahri.info.magic}},
+                                     y: {{champions.Ahri.info.defense}},
+                                     r: 10
+                                   }]
+                              }, 
+                              {
+                                   label: ["Akali"],
+                                   backgroundColor: "rgba(0,0,0,0.2)",
+                                   borderColor: "#000",
+                                   data: [{
+                                     x: {{champions.Akali.info.magic}},
+                                     y: {{champions.Akali.info.defense}},
+                                     r: 15
+                                   }]
+                              }, 
+                              {
+                                   label: ["Alistar"],
+                                   backgroundColor: "rgba(193,46,12,0.2)",
+                                   borderColor: "rgba(193,46,12,1)",
+                                   data: [{
+                                     x: {{champions.Alistar.info.magic}},
+                                     y: {{champions.Alistar.info.defense}},
+                                     r: 15
+                                   }]
+                              }]
+                         }
+
+                         var options ={
+                              title: {
+                                   display: true,
+                                   text: '챔피언 분포'
+                              }, 
+                              scales: {
+                                   yAxes: [{ 
+                                        ticks: {
+                                             suggestedMin: 0,
+                                             suggestedMax: 10,
+                                             stepSize: 1,
+                                             beginAtZero: true
+                                        },
+                                        scaleLabel: {
+                                             display: true,
+                                             labelString: "방어"
+                                        }
+                                   }],
+                                   xAxes: [{ 
+                                        ticks: {   
+                                             suggestedMin: -9,
+                                             suggestedMax:9,
+                                             stepSize: 1,
+                                             beginAtZero: true
+                                        },
+                                        scaleLabel: {
+                                             display: true,
+                                             labelString: "딜 (AP,AD)"
+                                        }
+                                   }]
+                              },
+                              responsive: true,
+                              legend: {
+                                   display: true,
+                                   position: 'bottom',
+                                   labels: {
+                                        boxWidth: 80,
+                                        fontColor: 'black'
+                                  }
+                              }
+                         }
+
+
+                         var myBubbleChart = new Chart(ctx,{
+                              type: 'bubble',
+                              data: bubbleChartData,
+                              options: options
+                         });
+
+                         // window.onload = function addDataset(){
+                         //      // alert('확인!');
+
+                         //           myBubbleChart.data.datasets.push({
+                         //                data: generateData()
+                         //           });
+
+                         //      myBubbleChart.update();
+                         //      console.log(bubbleChartData.datasets)
+                         // }
+
+                         // function generateData(){
+                         //      var data = [];
+                         //      var i;
+
+                         //      for (i = 0; i < DATA_COUNT; ++i) {
+                         //           data.push({
+                         //                x: Math.floor((Math.random() * 8) + 1),
+                         //                y: Math.floor((Math.random() * 8) + 1),
+                         //                r: Math.floor((Math.random() * 8) + 1),
+                                        
+                         //           });
+                         //      }
+
+                         //      return data;
+                         // }
+
+
+                         window.onload = function addDataset(){
+                              // alert('확인!');
+                              generateData()
+                              
+
+                              console.log(bubbleChartData.datasets)
+                         }
+
+                         function generateData(){
+                              var i;
+
+                              for (i = 0; i < DATA_COUNT; ++i) {
+                                   myBubbleChart.data.datasets.push({
+                                        label: [i],
+                                        // backgroundColor: "rgba(0,0,0,0.2)",
+                                        // borderColor: "#000",
+                                        data: [{
+                                             x: Math.floor((Math.random() * 16) - 8),
+                                             y: Math.floor((Math.random() * 8) + 1),
+                                             r: Math.floor((Math.random() * 8) + 1),
+                                        }]
+                                   });
+                              }
+
+                              myBubbleChart.update();
+                         }
+
+                         </script>
+                         <!-- graph end-->
+
+
+
+                         <!-- 검색 -->
+                         <form method="POST" class="search-form">{% csrf_token %}
+                              {{ form.as_p}}
+                              <button type="submit">search</button>
+                         </form>
+
+                         <h3>검색결과:</h3>
+
+                         {% for key, value in search_result.items %}
+                         <div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-info">
+                                   <span class="champion-name">{{key}}</span>
+                                   <ul>
+                                        <li>
+                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div class="stat-boxes">
+                                                  {% load blog_filters %}
+                                                  {% for i in value.info.defense|times %}
+                                                  <div class="foo blue"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                        <li>
+                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.attack|times %}
+                                                       <div class="foo wine"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>     
+                                        <li>
+                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.magic|times %}
+                                                       <div class="foo purple"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>
+                                        <li>
+                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.difficulty|times %}
+                                                  <div class="foo yellow"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                   </ul>
+                              </div>
+                         </div>
+                         {% endfor %}      
+
+                         <hr>                     
+
+                         <h3> 전체 리스트 </h3>
+                         <!-- champion 전체 리스트-->
+                         {% for key, value in champions.items %}
+                         <div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-info">
+                                   <span class="champion-name">{{key}}</span>
+                                   <ul>
+                                        <li>
+                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div class="stat-boxes">
+                                                  {% load blog_filters %}
+                                                  {% for i in value.info.defense|times %}
+                                                  <div class="foo blue"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                        <li>
+                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.attack|times %}
+                                                       <div class="foo wine"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>     
+                                        <li>
+                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.magic|times %}
+                                                       <div class="foo purple"></div>
+                                                  {% endfor %}
+                                                  </div>
+                                             </li>
+                                        <li>
+                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div class="stat-boxes">
+                                                  {% for i in value.info.difficulty|times %}
+                                                  <div class="foo yellow"></div>
+                                                  {% endfor %}
+                                             </div>
+                                        </li>
+                                   </ul>
+                              </div>
+                         </div>
+                         {% endfor %}     
+
+                                            
+                    </section>
+                    {% endblock %}

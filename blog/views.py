@@ -83,3 +83,41 @@ def tool(request):
 
     })       
     # return render(request, 'blog/tool.html',{})    
+
+def tool2(request):
+
+    # load champion data
+    url = 'http://ddragon.leagueoflegends.com/cdn/9.1.1/data/en_US/champion.json'
+    response = requests.get(url)
+    champion_data = response.json()
+    champions = champion_data['data']
+    default_items = [1,2,3,4,5,6]
+    labels = ["amumu","ahri", "katlin", "Zira", "Zoe", "Jax"]
+
+
+    # search champion by stat
+    search_result={}    
+
+    if request.method == "POST":
+        #폼에 입력된 데이터를 view 페이지로 가지고 올 때
+        form = SearchByStatForm(request.POST)
+        if form.is_valid():
+            search_result = form.search()
+
+    else:    
+       form = SearchByStatForm()
+
+
+    return render(request, 'blog/tool2.html',{
+        #champion list
+        'champions' : champions,
+        #search list
+        'form' : form, 'search_result' : search_result ,
+
+        'default_items': default_items,
+
+        'labels' : labels,
+
+
+    })       
+    # return render(request, 'blog/tool.html',{})    
