@@ -17,8 +17,8 @@
                                    backgroundColor: "rgba(255,221,50,0.2)",
                                    borderColor: "rgba(255,221,50,1)",
                                    data: [{
-                                     x: {{champions.Aatrox.info.magic}},
-                                     y: {{champions.Aatrox.info.defense}},
+                                     x: 8-3,
+                                     y: 4,
                                      r: 15
                                    }]
                               },
@@ -27,8 +27,8 @@
                                    backgroundColor: "rgba(60,186,159,0.2)",
                                    borderColor: "rgba(60,186,159,1)",
                                    data: [{
-                                     x: {{champions.Ahri.info.magic}},
-                                     y: {{champions.Ahri.info.defense}},
+                                     x: 3-8,
+                                     y: 4,
                                      r: 10
                                    }]
                               }, 
@@ -37,8 +37,8 @@
                                    backgroundColor: "rgba(0,0,0,0.2)",
                                    borderColor: "#000",
                                    data: [{
-                                     x: {{champions.Akali.info.magic}},
-                                     y: {{champions.Akali.info.defense}},
+                                     x: 5-8,
+                                     y: 3,
                                      r: 15
                                    }]
                               }, 
@@ -47,8 +47,8 @@
                                    backgroundColor: "rgba(193,46,12,0.2)",
                                    borderColor: "rgba(193,46,12,1)",
                                    data: [{
-                                     x: {{champions.Alistar.info.magic}},
-                                     y: {{champions.Alistar.info.defense}},
+                                     x: 6-5,
+                                     y: 9,
                                      r: 15
                                    }]
                               }]
@@ -171,41 +171,41 @@
 
                          <h3>검색결과:</h3>
 
-                         {% for key, value in search_result.items %}
+                         {% for champion in search_result %}
                          <div>
-                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{champion.id}}_0.jpg"></div>
                               <div class="champion-info">
-                                   <span class="champion-name">{{key}}</span>
+                                   <span class="champion-name">{{champion.name}}</span>
                                    <ul>
                                         <li>
-                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div>방어: {{champion.defense}}/10 </div>
                                              <div class="stat-boxes">
                                                   {% load blog_filters %}
-                                                  {% for i in value.info.defense|times %}
+                                                  {% for i in champion.defense|times %}
                                                   <div class="foo blue"></div>
                                                   {% endfor %}
                                              </div>
                                         </li>
                                         <li>
-                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div>공격: {{champion.attack}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.attack|times %}
+                                                  {% for i in champion.attack|times %}
                                                        <div class="foo wine"></div>
                                                   {% endfor %}
                                                   </div>
                                              </li>     
                                         <li>
-                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div>마법: {{champion.magic}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.magic|times %}
+                                                  {% for i in champion.magic|times %}
                                                        <div class="foo purple"></div>
                                                   {% endfor %}
                                                   </div>
                                              </li>
                                         <li>
-                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div>난이도: {{champion.difficulty}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.difficulty|times %}
+                                                  {% for i in champion.difficulty|times %}
                                                   <div class="foo yellow"></div>
                                                   {% endfor %}
                                              </div>
@@ -219,41 +219,41 @@
 
                          <h3> 전체 리스트 </h3>
                          <!-- champion 전체 리스트-->
-                         {% for key, value in champions.items %}
+                         {% for champion in champions %}
                          <div>
-                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{key}}_0.jpg"></div>
+                              <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{champion.id}}_0.jpg"></div>
                               <div class="champion-info">
-                                   <span class="champion-name">{{key}}</span>
+                                   <span class="champion-name">{{champion.name}}</span>
                                    <ul>
                                         <li>
-                                             <div>방어: {{value.info.defense}}/10 </div>
+                                             <div>방어: {{champion.defense}}/10 </div>
                                              <div class="stat-boxes">
                                                   {% load blog_filters %}
-                                                  {% for i in value.info.defense|times %}
+                                                  {% for i in champion.defense|times %}
                                                   <div class="foo blue"></div>
                                                   {% endfor %}
                                              </div>
                                         </li>
                                         <li>
-                                             <div>공격: {{value.info.attack}}/10</div>
+                                             <div>공격: {{champion.attack}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.attack|times %}
+                                                  {% for i in champion.attack|times %}
                                                        <div class="foo wine"></div>
                                                   {% endfor %}
                                                   </div>
                                              </li>     
                                         <li>
-                                             <div>마법: {{value.info.magic}}/10</div>
+                                             <div>마법: {{champion.magic}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.magic|times %}
+                                                  {% for i in champion.magic|times %}
                                                        <div class="foo purple"></div>
                                                   {% endfor %}
                                                   </div>
                                              </li>
                                         <li>
-                                             <div>난이도: {{value.info.difficulty}}/10</div>
+                                             <div>난이도: {{champion.difficulty}}/10</div>
                                              <div class="stat-boxes">
-                                                  {% for i in value.info.difficulty|times %}
+                                                  {% for i in champion.difficulty|times %}
                                                   <div class="foo yellow"></div>
                                                   {% endfor %}
                                              </div>

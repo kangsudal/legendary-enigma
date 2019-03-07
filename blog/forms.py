@@ -1,7 +1,9 @@
 from django import forms
 
 from .models import Post
+from .models import Champion
 import requests
+from django.db.models import Q
 
 class PostForm(forms.ModelForm):
 
@@ -26,42 +28,23 @@ class SearchByStatForm(forms.Form):
         magic = self.cleaned_data['magic']
         difficulty = self.cleaned_data['difficulty']
 
-        url = 'http://ddragon.leagueoflegends.com/cdn/9.1.1/data/en_US/champion.json'
-        response = requests.get(url)
-        champion_data = response.json()
-        champions = champion_data['data']    	
 
-    	# for key, value in champions.items() :
-    	# 	print(key,value)
 
-    	#print(list(champions.items()))
-    	#a = filter(positive, champions.)
+        if defense is None and attack is None and magic is None and difficulty is None:
+            result = None
+            return result
 
-    	# a = filter(positive, li)
-        conditions =[defense,attack,magic,difficulty]
-    	#result = filter(positive, champions)
+        c = Champion.objects.all()
 
-        result = self.getKeysByValues(champions, conditions)
+        if defense:
+            c = c.filter(defense=defense)
+        if attack:
+            c = c.filter(attack=attack)
+        if magic:
+            c = c.filter(magic=magic)
+        if difficulty:
+            c = c.filter(difficulty=difficulty)
 
-        #print(result)
-
+        result = c
+    
         return result
-
-    def getKeysByValues(self, champions, list):
-        champDics={}
-
-        for key,value in champions.items():
-            if self.isSame(value['info']['defense'], list[0]) and self.isSame(value['info']['attack'], list[1]) and self.isSame(value['info']['magic'], list[2]) and self.isSame(value['info']['difficulty'], list[3]) :
-                champDics.update({key:value})
-             
-	                
-        return champDics
-
-    def isSame( self, data, condition):
-        if condition is None:
-            return True
-
-        if data is condition:
-            return True
-
-        return False    

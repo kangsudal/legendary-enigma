@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
+from .models import Champion
 from django.utils  import timezone
 from .forms import PostForm
 from .forms import SearchByStatForm
@@ -87,10 +88,8 @@ def tool(request):
 def tool2(request):
 
     # load champion data
-    url = 'http://ddragon.leagueoflegends.com/cdn/9.1.1/data/en_US/champion.json'
-    response = requests.get(url)
-    champion_data = response.json()
-    champions = champion_data['data']
+    champions = Champion.objects.all()
+
     default_items = [1,2,3,4,5,6]
     labels = ["amumu","ahri", "katlin", "Zira", "Zoe", "Jax"]
 
