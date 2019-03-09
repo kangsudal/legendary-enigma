@@ -142,18 +142,18 @@
                          function generateData(){
                               var i;
 
-                              for (i = 0; i < DATA_COUNT; ++i) {
+                              {% for champion in champions %}
                                    myBubbleChart.data.datasets.push({
-                                        label: [i],
+                                        label: ["{{champion.name}}"],
                                         // backgroundColor: "rgba(0,0,0,0.2)",
                                         // borderColor: "#000",
                                         data: [{
-                                             x: Math.floor((Math.random() * 16) - 8),
-                                             y: Math.floor((Math.random() * 8) + 1),
-                                             r: Math.floor((Math.random() * 8) + 1),
+                                             x: {{champion.attack}}-{{champion.magic}},
+                                             y: {{champion.defense}},
+                                             r: ({{champion.attack}}+{{champion.magic}})*1,
                                         }]
                                    });
-                              }
+                              {% endfor %}
 
                               myBubbleChart.update();
                          }
