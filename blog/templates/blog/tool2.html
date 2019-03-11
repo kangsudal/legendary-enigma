@@ -5,56 +5,34 @@
                     <section class ="champion-list">
                          <!--graph-->
                          <div id="container" >
-                              <canvas id="myChart" width="400" height="400"></canvas>
+                              <canvas id="bubblespace" width="400" height="400"></canvas>
                          </div>
                          <script>
                          var DATA_COUNT = 142;
-                         var ctx = document.getElementById("myChart");
+                         var bubbleCanvas = document.getElementById("bubblespace");
                          var bubbleChartData = {
                               datasets: [
-                              {
-                                   label: ["Aatrox"],
-                                   backgroundColor: "rgba(255,221,50,0.2)",
-                                   borderColor: "rgba(255,221,50,1)",
-                                   data: [{
-                                     x: 8-3,
-                                     y: 4,
-                                     r: 15
-                                   }]
-                              },
-                              {
-                                   label: ["Ahri"],
-                                   backgroundColor: "rgba(60,186,159,0.2)",
-                                   borderColor: "rgba(60,186,159,1)",
-                                   data: [{
-                                     x: 3-8,
-                                     y: 4,
-                                     r: 10
-                                   }]
-                              }, 
-                              {
-                                   label: ["Akali"],
-                                   backgroundColor: "rgba(0,0,0,0.2)",
-                                   borderColor: "#000",
-                                   data: [{
-                                     x: 5-8,
-                                     y: 3,
-                                     r: 15
-                                   }]
-                              }, 
-                              {
-                                   label: ["Alistar"],
-                                   backgroundColor: "rgba(193,46,12,0.2)",
-                                   borderColor: "rgba(193,46,12,1)",
-                                   data: [{
-                                     x: 6-5,
-                                     y: 9,
-                                     r: 15
-                                   }]
-                              }]
+
+                              {% for champion in champions %}
+                                   {
+                                        label: ["{{champion.name}}"],
+                                        // backgroundColor: "rgba(0,0,0,0.2)",
+                                        // borderColor: "#000",
+                                        data: [{
+                                             x: {{champion.attack}}-{{champion.magic}},
+                                             y: {{champion.defense}},
+                                             r: ({{champion.attack}}+{{champion.magic}})*1,
+                                        }]
+                                   },
+                              {% endfor %}
+                              ]
                          }
 
                          var options ={
+                              tooltips: {
+                                   mode: "point",
+                                   intersect: false,
+                              },
                               title: {
                                    display: true,
                                    text: '챔피언 분포'
@@ -97,66 +75,99 @@
                          }
 
 
-                         var myBubbleChart = new Chart(ctx,{
+                         var bubbleChart = new Chart(bubbleCanvas,{
                               type: 'bubble',
                               data: bubbleChartData,
                               options: options
                          });
 
-                         // window.onload = function addDataset(){
-                         //      // alert('확인!');
-
-                         //           myBubbleChart.data.datasets.push({
-                         //                data: generateData()
-                         //           });
-
-                         //      myBubbleChart.update();
-                         //      console.log(bubbleChartData.datasets)
-                         // }
-
-                         // function generateData(){
-                         //      var data = [];
-                         //      var i;
-
-                         //      for (i = 0; i < DATA_COUNT; ++i) {
-                         //           data.push({
-                         //                x: Math.floor((Math.random() * 8) + 1),
-                         //                y: Math.floor((Math.random() * 8) + 1),
-                         //                r: Math.floor((Math.random() * 8) + 1),
-                                        
-                         //           });
-                         //      }
-
-                         //      return data;
-                         // }
 
 
-                         window.onload = function addDataset(){
-                              // alert('확인!');
-                              generateData()
+
+                         //clicking bubble event : https://jsfiddle.net/xpghnytp/1/  
+ /*                        bubblespace.onclick = function(evt) {
+
+                              //getting x,y position of clicking area.
+                              // var helpers = Chart.helpers;
+                              // var eventPosition = helpers.getRelativePosition(evt, bubbleChart.chart);
+                              // var mouseX = eventPosition.x;
+                              // var mouseY = eventPosition.y;
+                              // console.log(mouseX+','+mouseY);
+
                               
+                              var activePoints = bubbleChart.getElementAtEvent(evt);
+                              var firstPoint = activePoints[0];
 
-                              console.log(bubbleChartData.datasets)
-                         }
+                              if (firstPoint) {
+                                   var chartData = firstPoint['_chart'].config.data;
+                                   var idx = firstPoint['_datasetIndex'];
 
-                         function generateData(){
-                              var i;
+                                   var label = chartData.datasets[idx].label;
+                                   // var value = chartData.datasets[idx].data[0];
 
-                              {% for champion in champions %}
-                                   myBubbleChart.data.datasets.push({
-                                        label: ["{{champion.name}}"],
-                                        // backgroundColor: "rgba(0,0,0,0.2)",
-                                        // borderColor: "#000",
-                                        data: [{
-                                             x: {{champion.attack}}-{{champion.magic}},
-                                             y: {{champion.defense}},
-                                             r: ({{champion.attack}}+{{champion.magic}})*1,
-                                        }]
-                                   });
-                              {% endfor %}
 
-                              myBubbleChart.update();
-                         }
+
+                                   //position of bubble
+                                   var position_x = firstPoint['_model'].x;
+                                   var position_y = firstPoint['_model'].y;
+
+                                   // location.href="#search_result";
+                                   //console.log('firstPoint:',firstPoint);
+                                   //console.log('activePoints:',activePoints);
+                                   // console.log('how many activePoints?',activePoints.length);
+                                   //console.log('evt shape?',evt);
+
+                                   // var url = "http://example.com/?label=" + label + "&value=" + value.r;
+                                   var url = "("+position_x+","+position_y+")"+label;
+                                   console.log(url);
+                                   // alert(url);
+                              }
+                              
+                         };
+*/
+                         bubblespace.onclick = function(e) {
+                                var helpers = Chart.helpers;
+                                var eventPosition = helpers.getRelativePosition(e, bubbleChart.chart);
+                                var elementsArray = [];
+
+                                helpers.each(bubbleChart.data.datasets, function(dataset, datasetIndex) {
+                                    if (bubbleChart.isDatasetVisible(datasetIndex)) {
+                                        var meta = bubbleChart.getDatasetMeta(datasetIndex);
+                                        helpers.each(meta.data, function(element) {
+                                            if (element.inRange(eventPosition.x, eventPosition.y)) {
+                                                elementsArray.push(element);
+                                                return elementsArray;
+                                            }
+                                        });
+                                    }
+                                });
+                                console.log(bubbleChart.data.datasets);
+                                // elementsArray[0]['_datasetIndex'];
+
+                                if(elementsArray.length>0){
+                                   var str = ''
+                                   var chartData = bubbleChart.data.datasets;
+                                   for(var i=0; i<elementsArray.length; i++){
+                                        idx = elementsArray[i]['_datasetIndex']
+                                        str =str+ chartData[idx].label+" ";
+                                        // console.log(str);
+                                   }
+                                   document.getElementById("search_result").innerHTML = str;
+                                   location.href="#search_result";
+                                   
+                                  }
+                                // return elementsArray;
+                           }
+
+
+/*
+                         var points = bubbleChart.getDatasetMeta(0).data;
+                         var x = points[0]._model.x;
+                         var y = points[0]._model.y;
+                         console.log('this is about points:')
+                         console.log(points);
+                         console.log('x:'+x+',y:'+y)
+*/
 
                          </script>
                          <!-- graph end-->
@@ -171,8 +182,10 @@
 
                          <h3>검색결과:</h3>
 
+                         <div id="search_result">
+
                          {% for champion in search_result %}
-                         <div>
+                         
                               <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{champion.id}}_0.jpg"></div>
                               <div class="champion-info">
                                    <span class="champion-name">{{champion.name}}</span>
@@ -212,8 +225,9 @@
                                         </li>
                                    </ul>
                               </div>
-                         </div>
-                         {% endfor %}      
+                         
+                         {% endfor %}   
+                         </div>   
 
                          <hr>                     
 
