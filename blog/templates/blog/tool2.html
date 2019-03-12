@@ -126,37 +126,48 @@
                          };
 */
                          bubblespace.onclick = function(e) {
-                                var helpers = Chart.helpers;
-                                var eventPosition = helpers.getRelativePosition(e, bubbleChart.chart);
-                                var elementsArray = [];
+                              var helpers = Chart.helpers;
+                              var eventPosition = helpers.getRelativePosition(e, bubbleChart.chart);
+                              var elementsArray = [];
 
-                                helpers.each(bubbleChart.data.datasets, function(dataset, datasetIndex) {
-                                    if (bubbleChart.isDatasetVisible(datasetIndex)) {
-                                        var meta = bubbleChart.getDatasetMeta(datasetIndex);
-                                        helpers.each(meta.data, function(element) {
-                                            if (element.inRange(eventPosition.x, eventPosition.y)) {
-                                                elementsArray.push(element);
-                                                return elementsArray;
-                                            }
-                                        });
-                                    }
-                                });
-                                console.log(bubbleChart.data.datasets);
-                                // elementsArray[0]['_datasetIndex'];
+                              helpers.each(bubbleChart.data.datasets, function(dataset, datasetIndex) {
+                               if (bubbleChart.isDatasetVisible(datasetIndex)) {
+                                   var meta = bubbleChart.getDatasetMeta(datasetIndex);
+                                   helpers.each(meta.data, function(element) {
+                                       if (element.inRange(eventPosition.x, eventPosition.y)) {
+                                           elementsArray.push(element);
+                                           return elementsArray;
+                                       }
+                                   });
+                               }
+                              });
+                              // console.log(bubbleChart.data.datasets);
+                              // elementsArray[0]['_datasetIndex'];
 
-                                if(elementsArray.length>0){
+                              if(elementsArray.length>0){
                                    var str = ''
                                    var chartData = bubbleChart.data.datasets;
                                    for(var i=0; i<elementsArray.length; i++){
                                         idx = elementsArray[i]['_datasetIndex']
-                                        str =str+ chartData[idx].label+" ";
-                                        // console.log(str);
+                                        str =str+ idx;
+                                        if(i != elementsArray.length-1)
+                                        {
+                                             str = str +",";
+                                        }
+                                        // str =str+ chartData[idx].label+",";
+                                        console.log(str);
                                    }
-                                   document.getElementById("search_result").innerHTML = str;
-                                   location.href="#search_result";
-                                   
-                                  }
-                                // return elementsArray;
+                                   // document.getElementById("search_result").innerHTML = str;
+                                   // location.href="#search_result";
+
+                                   // console.log(elementsArray)
+                                   document.getElementById("id_indices").value = str;
+                                   alert(document.getElementById("id_indices").value);
+                                   var myform = document.getElementById("#form");
+                                   myform.submit();
+
+                              }
+                              // return elementsArray;
                            }
 
 
@@ -175,16 +186,16 @@
 
 
                          <!-- 검색 -->
-                         <form method="POST" class="search-form">{% csrf_token %}
+                         <form method="POST" class="search-form" id="#form">{% csrf_token %}
                               {{ form.as_p}}
                               <button type="submit">search</button>
                          </form>
 
                          <h3>검색결과:</h3>
 
-                         <div id="search_result">
-
                          {% for champion in search_result %}
+
+                         <div id="search_result">
                          
                               <div class="champion-img"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{champion.id}}_0.jpg"></div>
                               <div class="champion-info">
@@ -224,10 +235,10 @@
                                              </div>
                                         </li>
                                    </ul>
-                              </div>
-                         
-                         {% endfor %}   
+                              </div> 
                          </div>   
+                         
+                         {% endfor %}  
 
                          <hr>                     
 

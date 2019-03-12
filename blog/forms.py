@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.postgres.forms import SimpleArrayField
 from .models import Post
 from .models import Champion
 import requests
@@ -18,6 +18,7 @@ class SearchByStatForm(forms.Form):
     attack= forms.IntegerField(label='공격', required=False)
     magic= forms.IntegerField(label='마법', required=False)
     difficulty= forms.IntegerField(label='난이도', required=False)
+    indices = SimpleArrayField(forms.IntegerField(), required=False)
 
 
     def search(self):
@@ -27,10 +28,12 @@ class SearchByStatForm(forms.Form):
         attack = self.cleaned_data['attack']
         magic = self.cleaned_data['magic']
         difficulty = self.cleaned_data['difficulty']
+        indices = self.cleaned_data['indices']#[0,1,2]
+        print("인덱스:",indices)
 
 
 
-        if defense is None and attack is None and magic is None and difficulty is None:
+        if defense is None and attack is None and magic is None and difficulty is None and indices is None:
             result = None
             return result
 
@@ -44,7 +47,11 @@ class SearchByStatForm(forms.Form):
             c = c.filter(magic=magic)
         if difficulty:
             c = c.filter(difficulty=difficulty)
+        if indices:
+            c = Champion.objects.filter(unnamed_0__in = indices)
 
         result = c
+
+        # print(result)
     
         return result
