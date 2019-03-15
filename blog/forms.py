@@ -18,7 +18,7 @@ class SearchByStatForm(forms.Form):
     attack= forms.IntegerField(label='공격', required=False)
     magic= forms.IntegerField(label='마법', required=False)
     difficulty= forms.IntegerField(label='난이도', required=False)
-    indices = SimpleArrayField(forms.IntegerField(), required=False)
+    indices = SimpleArrayField(forms.IntegerField(), required=False, widget=forms.HiddenInput())
 
 
     def search(self):

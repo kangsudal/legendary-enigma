@@ -162,7 +162,7 @@
 
                                    // console.log(elementsArray)
                                    document.getElementById("id_indices").value = str;
-                                   alert(document.getElementById("id_indices").value);
+                                   // alert(document.getElementById("id_indices").value);
                                    var myform = document.getElementById("#form");
                                    myform.submit();
 
@@ -194,6 +194,9 @@
                          <h3>검색결과:</h3>
 
                          {% for champion in search_result %}
+                         <script>
+                              location.href="#search_result";
+                         </script>
 
                          <div id="search_result">
                          
